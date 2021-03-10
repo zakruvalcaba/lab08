@@ -1,54 +1,51 @@
-/*eslint-env browser*/
+// GLOBAL VARIABLES
+let monthlyRate;
+let months;
+let futureValue;
+let monthlyInterest;
+let investment;
+let rate;
+let years;
+let calculate;
+let output;
 
-//GLOBAL VARIABLES
-var monthlyRate;
-var months;
-var futureValue;
-var monthlyInterest;
-var i;
-var rate;
-var investment;
-var years;
-var output;
-var calculate;
+// HELPER FUNCTION TO GET DOM ELEMENTS
+const $ = (id) => {
+    return document.getElementById(id);
+};
 
-//GET DOM ELEMENTS
-investment =    window.document.getElementById("investment");
-rate =          window.document.getElementById("interest");
-years =         window.document.getElementById("years");
-output =        window.document.getElementById("futurevalue");
-calculate =     window.document.getElementById("calculate");
+window.addEventListener('load', init);
 
-//CALCULATE THE FUTURE VALUE
-function calculateInvestment(investment, rate, years) {
-    "use strict";
-    monthlyRate =   rate / 12 / 100;
-    months =        years * 12;
-    futureValue =   investment;
-    
-    for (i = 1; i < months; i += 1) {
-        monthlyInterest =   futureValue * monthlyRate;
-        futureValue +=      monthlyInterest;
+function init() {
+    // GET DOM ELEMENTS
+    investment  = $('invesment');
+    rate        = $('rate');
+    years       = $('years');
+    calculate   = $('calculate');
+    output      = $('output');
+
+    // CALCULATE THE INVESTMENT AND RETURN THE RESULT
+    function calculateInvestment(investment, rate, years) {
+        monthlyRate     = rate / 12 / 100;
+        months          = years * 12;
+        futureValue     = investment;
+
+        for (let i = 1; i < months; i++) {
+            monthlyInterest = futureValue * monthlyRate;
+            futureValue     += monthlyInterest;
+        }
+
+        return futureValue;
     }
-    return futureValue;
+
+    // GET TEXTBOX VALUES, CALL CALCULATE INVESTMENT, DISPLAY  RESULT
+    calculate.addEventListener('click', () => {
+        investment  = parseFloat(investment.value);
+        rate        = parseFloat(rate.value);
+        years       = parseInt(years.value);
+
+        futureValue = calculateInvestment(investment, rate, years);
+        
+        output.innerHTML = `Future value on investment: $${futureValue.toFixed(2)}`;
+    });
 }
-
-//GET THE VALUES OF THE DOM ELEMENTS, CALCULATE, AND DISPLAY RESULT
-calculate.addEventListener("click", function () {
-    "use strict";
-    investment =    parseFloat(investment.value);
-    rate =          parseFloat(rate.value);
-    years =         parseInt(years.value, 10);
-    
-    futureValue =   calculateInvestment(investment, rate, years);
-    
-    output.innerHTML = "Future value: $" + Math.round(futureValue) + ".00";
-});
-
-
-
-
-
-
-
-
