@@ -1,51 +1,44 @@
 // GLOBAL VARIABLES
-let monthlyRate;
-let months;
-let futureValue;
-let monthlyInterest;
-let investment;
-let rate;
-let years;
-let calculate;
-let output;
+let monthlyRate
+let months
+let futureValue
+let monthlyInterest
+let investment      // HTML ELEMENT (TEXT)
+let rate            // HTML ELEMENT (TEXT)
+let years           // HTML ELEMENT (TEXT)
+let calculate       // HTML ELEMENT (BUTTON)
+let output          // HTML ELEMENT (OUTPUT)
 
 // HELPER FUNCTION TO GET DOM ELEMENTS
-const $ = (id) => {
-    return document.getElementById(id);
-};
+const $ = (id) => document.getElementById(id)
 
-window.addEventListener('load', init);
+// GET DOM ELEMENTS
+investment  = $('investment')
+rate        = $('rate')
+years       = $('years')
+calculate   = $('calculate')
+output      = $('output')
 
-function init() {
-    // GET DOM ELEMENTS
-    investment  = $('invesment');
-    rate        = $('rate');
-    years       = $('years');
-    calculate   = $('calculate');
-    output      = $('output');
+// CALCULATE THE INVESTMENT AND RETURN THE RESULT
+function calculateInvestment(investment, rate, years) {
+    monthlyRate     = rate / 12 / 100
+    months          = years * 12
 
-    // CALCULATE THE INVESTMENT AND RETURN THE RESULT
-    function calculateInvestment(investment, rate, years) {
-        monthlyRate     = rate / 12 / 100;
-        months          = years * 12;
-        futureValue     = investment;
-
-        for (let i = 1; i < months; i++) {
-            monthlyInterest = futureValue * monthlyRate;
-            futureValue     += monthlyInterest;
-        }
-
-        return futureValue;
+    for (let i = 0; i < months; i++) {
+        monthlyInterest = investment * monthlyRate
+        investment += monthlyInterest
     }
 
-    // GET TEXTBOX VALUES, CALL CALCULATE INVESTMENT, DISPLAY  RESULT
-    calculate.addEventListener('click', () => {
-        investment  = parseFloat(investment.value);
-        rate        = parseFloat(rate.value);
-        years       = parseInt(years.value);
-
-        futureValue = calculateInvestment(investment, rate, years);
-        
-        output.innerHTML = `Future value on investment: $${futureValue.toFixed(2)}`;
-    });
+    return investment
 }
+
+// GET TEXTBOX VALUES, CALL CALCULATE INVESTMENT, DISPLAY RESULTS
+calculate.addEventListener('click', () => {
+    investment  = parseFloat(investment.value)
+    rate        = parseFloat(rate.value)
+    years       = parseFloat(years.value)
+
+    futureValue = calculateInvestment(investment, rate, years)
+
+    output.innerHTML = `Future value on investment: $${futureValue.toFixed(2)}`
+})
