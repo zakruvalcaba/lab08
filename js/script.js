@@ -3,21 +3,29 @@ let monthlyRate
 let months
 let futureValue
 let monthlyInterest
-let investment      // HTML ELEMENT (TEXT)
-let rate            // HTML ELEMENT (TEXT)
-let years           // HTML ELEMENT (TEXT)
-let calculate       // HTML ELEMENT (BUTTON)
-let output          // HTML ELEMENT (OUTPUT)
+let investment          // THE INVESTMENT TEXT BOX
+let rate                // THE RATE TEXT BOX
+let years               // THE YEARS TEXT BOX
+let calculate           // THE CALCULATE BUTTON
+let output              // THE OUTPUT TAG
 
-// HELPER FUNCTION TO GET DOM ELEMENTS
+// OPTION 1
+// HELPER FUNCTION TO RETURN DOM ELEMENT
 const $ = (id) => document.getElementById(id)
 
-// GET DOM ELEMENTS
-investment  = $('investment')
-rate        = $('rate')
-years       = $('years')
-calculate   = $('calculate')
-output      = $('output')
+// GET THE DOM ELEMENTS
+investment      = $('investment')
+rate            = $('rate')
+years           = $('years')
+calculate       = $('calculate')
+output          = $('output')
+
+// OPTION 2
+// let investment   = document.getElementById('investment')
+// let rate         = document.getElementById('rate')
+// let years        = document.getElementById('years')
+// let calculate    = document.getElementById('calculate')
+// let output       = document.getElementById('output')
 
 // CALCULATE THE INVESTMENT AND RETURN THE RESULT
 function calculateInvestment(investment, rate, years) {
@@ -32,13 +40,12 @@ function calculateInvestment(investment, rate, years) {
     return investment
 }
 
-// GET TEXTBOX VALUES, CALL CALCULATE INVESTMENT, DISPLAY RESULTS
 calculate.addEventListener('click', () => {
-    investment  = parseFloat(investment.value)
-    rate        = parseFloat(rate.value)
-    years       = parseFloat(years.value)
-
-    futureValue = calculateInvestment(investment, rate, years)
+    futureValue = calculateInvestment(
+        parseFloat(investment.value), 
+        parseFloat(rate.value), 
+        parseFloat(years.value)
+    )
 
     output.innerHTML = `Future value on investment: $${futureValue.toFixed(2)}`
 })
